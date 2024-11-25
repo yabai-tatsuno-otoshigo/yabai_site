@@ -41,7 +41,13 @@
 
             for (let [a, b, c, d, correct] of sequence) {
                 let choice = await s(a, b, c, d);
-                if (choice !== correct) return;
+                if (choice !== correct) {
+                    document.getElementById('log').textContent = 'んーー雑魚乙';
+                    setTimeout(() => {
+                        window.location.reload();
+                    }, 1000);
+                    return;
+                }
             }
 
             document.getElementById('log').textContent = 'おめ';
