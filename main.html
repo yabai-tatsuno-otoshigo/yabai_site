@@ -1,16 +1,113 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <link rel="icon" href="icon.ico">
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>YTS</title>
+    <style>
+        * {
+            background-color: #f0f8ff;
+        }
+
+        .link {
+            display: inline-block;
+        }
+
+        .movable-description {
+            display: none;
+            position: absolute;
+            background-color: #dedede;
+            padding: 10px;
+            border: 1px solid #b2b2b2;
+        }
+
+        #iframeMemo {
+            display: none;
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            width: 500px;
+            height: 750px;
+            transform: translate(-50%, -50%);
+            z-index: 1000;
+            border: 2px solid #ffe600;
+            background-color: #f0f8ff;
+            padding: 10px;
+        }
+    </style>
 </head>
+
 <body>
-    <p><span align="center">Link_Zone</span><br>
-        <a href="https://jp.spankbang.com/profile/koppepanorange" target="_blank">SpankBang</a><br>
-        <a href="https://jp.pornhub.com/users/koppepanorange/videos/favorites" target="_blank">PornHub</a><br>
-        <a href="https://boko.main.jp/" target="_blank">Boko.main</a>
-    </p>
+    Link-Zone<br>
+    <div id="link-zone"></div><br>
+    <button id="onoffMemo">on Memo</button>
+    <iframe id="iframeMemo" src="https://koppepan-orange.github.io/test-site/memo.html"></iframe>
+    <script>
+        const Links = {
+            'spaba': {
+                id: 'spaba',
+                name: 'spankbang',
+                href: 'https://jp.spankbang.com/profile/koppepanorange',
+                description: 'すぱばさん<br>ここだけの話、これしか基本的に見ない<br>この一個下のやつは民度が低くて..'
+            },
+            'pohu': {
+                id: 'pohu',
+                name: 'pornhub',
+                href: 'https://jp.pornhub.com/users/koppepanorange/videos/favorites',
+                description: 'まあ人気そうっていうのも理由だけど'
+            },
+            'bokom': {
+                id: 'bokom',
+                name: 'boko.main',
+                href: 'https://boko.main.jp/',
+                description: '私がこの界隈に触れるきっかけになった人のやつやね'
+            },
+            'bokog': {
+                id: 'bokog',
+                name: 'boko.game',
+                href: 'https://boko.main.jp/gbhasweb/8902938161/index.html',
+                description: '一個上の人のゲームのブラウザ版やね<br>macでも動いてくれて嬉しい'
+            },
+            'dlsite': {
+                id: 'dlsite',
+                name: 'dlsite',
+                href: 'https://www.dlsite.com/home/mypage/wishlist',
+                description: 'いやぁ...いいですよね、ここ<br>基本ゲームか音声しか買わんけど良き'
+            }
+        }
+        Object.keys(Links).forEach(key => {
+            let link = document.createElement('div');
+            link.className = 'link';
+            link.id = Links[key].id;
+            link.innerHTML = `<a href="${Links[key].href}" target="_blank">${Links[key].name}</a>`;
+            link.addEventListener('mouseover', event => {
+                let Description = document.createElement('div');
+                Description.className = 'Description';
+                Description.innerHTML = `<p>${Links[key].description}</p>`;
+                document.body.appendChild(Description);
+            });
+            link.addEventListener('mouseout', event => {
+                let Description = document.getElementsByClassName('Description')[0];
+                document.body.removeChild(Description);
+            });
+            document.getElementById('link-zone').appendChild(link);
+            document.getElementById('link-zone').appendChild(document.createElement('br'));
+        });
+
+        let Memo = 0
+        let MemoB = document.getElementById('onoffMemo');
+        let MemoI = document.getElementById('iframeMemo');
+        addEventListener('click', event => {
+            if (Memo == 0) {
+                MemoI.style.display = 'block';
+                Memo = 1;
+            } else {
+                MemoI.style.display = 'none';
+                Memo = 0;
+            }
+        });
+    </script>
 </body>
 </html>
